@@ -35,7 +35,7 @@ O sistema também inclui uma mecânica de dívidas para impostos não pagos, com
 
 ---
 
-### 2. Banco de Dados (SQL)
+### 2. Banco de Dados (SQL)  DEIXEI TUDO NA PASTA INSTAL INCLUSIVE OS SCRIPTS MODIFICADOS CASO N QUEIRAM MODIFICAR NA MÃO
 
 Execute os seguintes comandos SQL no seu banco de dados para criar as tabelas necessárias. Você pode usar o arquivo `.sql` pronto disponível na pasta `sql`.
 
