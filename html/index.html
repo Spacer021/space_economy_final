@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Interface Econômica</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="overlay">
+        
+        <div class="card" id="admin-dashboard-container" style="display: none;">
+            <h2 class="card-title">Painel de Controle Econômico</h2>
+            <div class="card-content dashboard-grid">
+                <button class="dashboard-button" data-action="viewVault">
+                    <i class="fas fa-landmark"></i>
+                    <span>Ver Saldo do Cofre</span>
+                </button>
+                <button class="dashboard-button" data-action="addVault">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Adicionar ao Cofre</span>
+                </button>
+                <button class="dashboard-button" data-action="withdrawVault">
+                    <i class="fas fa-minus-circle"></i>
+                    <span>Sacar do Cofre</span>
+                </button>
+                <button class="dashboard-button" data-action="viewDebts">
+                    <i class="fas fa-users"></i>
+                    <span>Ver Lista de Devedores</span>
+                </button>
+                 <button class="dashboard-button" data-action="viewSpecificDebt">
+                    <i class="fas fa-user-tag"></i>
+                    <span>Buscar Dívida Específica</span>
+                </button>
+                <button class="dashboard-button" data-action="collectDebt">
+                    <i class="fas fa-gavel"></i>
+                    <span>Cobrar Dívida de Jogador</span>
+                </button>
+            </div>
+            <div class="card-actions">
+                <button data-close-button class="button secondary"><i class="fas fa-sign-out-alt"></i> Sair do Painel</button>
+            </div>
+        </div>
+
+        <div class="card" id="payment-container" style="display: none;">
+            <h2 class="card-title">Pagamento de Taxa</h2>
+            <div class="card-content">
+                <div class="info-item">
+                    <i class="fas fa-dollar-sign icon"></i>
+                    <span class="info-label">Valor:</span>
+                    <span id="tax-value">$0</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-file-invoice-dollar icon"></i>
+                    <span class="info-label">Motivo:</span>
+                    <span class="info-value">Taxa</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <button id="pay" class="button primary"><i class="fas fa-check-circle"></i> Pagar</button>
+                <button id="refuse" class="button secondary"><i class="fas fa-times-circle"></i> Recusar</button>
+            </div>
+        </div>
+
+        <div class="card success-card" id="success-container" style="display: none;">
+            <i class="fas fa-check-double success-icon"></i>
+            <h2 class="card-title">Pagamento Realizado!</h2>
+            <div class="card-content">
+                <p id="success-message">Sua taxa foi paga com sucesso.</p>
+            </div>
+            <div class="card-actions">
+                <button data-close-button class="button"><i class="fas fa-times"></i> Fechar</button>
+            </div>
+        </div>
+
+        <div class="card" id="debt-collect-prompt-container" style="display: none;">
+            <h2 class="card-title">Aviso de Dívida Governamental</h2>
+            <div class="card-content">
+                <p class="info-item">O governo está exigindo o pagamento imediato de uma dívida pendente no valor de:</p>
+                <p class="info-item large-text debt-value" id="debt-prompt-amount">$0</p>
+                <p class="warning-text">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    A recusa ou incapacidade de pagar resultará na emissão de um mandado de prisão federal. Seus bens poderão ser apreendidos para quitar o débito.
+                </p>
+            </div>
+            <div class="card-actions">
+                <button id="debt-prompt-pay" class="button primary"><i class="fas fa-hand-holding-usd"></i> Pagar Dívida</button>
+                <button id="debt-prompt-refuse" class="button secondary"><i class="fas fa-gavel"></i> Recusar e Virar Procurado</button>
+            </div>
+        </div>
+
+        <div class="card" id="vault-view-container" style="display: none;">
+            <h2 class="card-title">Saldo do Cofre</h2>
+            <div class="card-content">
+                <p class="info-item large-text">
+                    <i class="fas fa-landmark icon"></i>
+                    <span id="vault-balance-value">$0</span>
+                </p>
+            </div>
+            <div class="card-actions">
+                <button data-close-button class="button"><i class="fas fa-times"></i> Fechar</button>
+            </div>
+        </div>
+
+        <div class="card" id="vault-add-container" style="display: none;">
+            <h2 class="card-title">Adicionar ao Cofre</h2>
+            <div class="card-content">
+                <input type="number" id="add-amount-input" class="modern-input" placeholder="Digite o valor a ser adicionado">
+            </div>
+            <div class="card-actions">
+                <button id="add-vault-confirm" class="button primary"><i class="fas fa-plus-circle"></i> Confirmar</button>
+                <button data-close-button class="button secondary"><i class="fas fa-ban"></i> Cancelar</button>
+            </div>
+        </div>
+
+        <div class="card" id="vault-withdraw-container" style="display: none;">
+            <h2 class="card-title">Sacar do Cofre</h2>
+            <div class="card-content">
+                <input type="number" id="withdraw-amount-input" class="modern-input" placeholder="Digite o valor a ser sacado">
+            </div>
+            <div class="card-actions">
+                <button id="withdraw-vault-confirm" class="button primary"><i class="fas fa-minus-circle"></i> Confirmar</button>
+                <button data-close-button class="button secondary"><i class="fas fa-ban"></i> Cancelar</button>
+            </div>
+        </div>
+
+        <div class="card" id="debt-list-container" style="display: none;">
+            <h2 class="card-title">Maiores Devedores</h2>
+            <div class="card-content table-container">
+                <table id="debt-table">
+                    <thead>
+                        <tr>
+                            <th>Nome do Jogador</th>
+                            <th>Citizen ID</th>
+                            <th>Valor da Dívida</th>
+                            <th>Motivo</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="card-actions">
+                <button data-close-button class="button"><i class="fas fa-times"></i> Fechar</button>
+            </div>
+        </div>
+
+        <div class="card" id="debt-detail-container" style="display: none;">
+            <h2 class="card-title">Detalhes da Dívida</h2>
+            <div class="card-content">
+                 <p class="info-item"><span class="info-label">Nome:</span> <span id="debt-detail-name">N/A</span></p>
+                 <p class="info-item"><span class="info-label">CitizenID:</span> <span id="debt-detail-citizenid">N/A</span></p>
+                 <p class="info-item"><span class="info-label">Valor:</span> <span id="debt-detail-amount" class="debt-value">N/A</span></p>
+                 <p class="info-item"><span class="info-label">Motivo:</span> <span id="debt-detail-reason">N/A</span></p>
+            </div>
+            <div class="card-actions">
+                <button data-close-button class="button"><i class="fas fa-times"></i> Fechar</button>
+            </div>
+        </div>
+
+        <div class="card" id="debt-input-container" style="display: none;">
+            <h2 class="card-title" id="debt-input-title">Ação de Dívida</h2>
+            <div class="card-content">
+                <p>Por favor, insira o Citizen ID do jogador:</p>
+                <input type="text" id="debt-citizenid-input" class="modern-input" placeholder="Citizen ID">
+            </div>
+            <div class="card-actions">
+                <button id="debt-input-confirm" class="button primary"><i class="fas fa-check"></i> Confirmar</button>
+                <button data-action="backToDashboard" class="button secondary"><i class="fas fa-arrow-left"></i> Voltar</button>
+            </div>
+        </div>
+
+        <div class="card" id="laundering-container" style="display: none;">
+            <h2 class="card-title">Operação de Lavagem</h2>
+            <div class="card-content">
+                <p>Insira os detalhes da operação:</p>
+                <input type="number" id="laundering-amount" class="modern-input" placeholder="Quantidade de Dinheiro Sujo">
+                <input type="number" id="laundering-fee-percent" class="modern-input" placeholder="Sua Taxa em % (Ex: 15)">
+            </div>
+            <div class="card-actions">
+                <button id="laundering-confirm" class="button primary"><i class="fas fa-soap"></i> Iniciar Lavagem</button>
+                <button data-close-button class="button secondary"><i class="fas fa-ban"></i> Cancelar</button>
+            </div>
+        </div>
+        
+        <div class="card" id="calculator-container" style="display: none;">
+            <h2 class="card-title">Calculadora de Taxas</h2>
+            <div class="card-content">
+                <p>Digite o valor do produto para calcular o imposto:</p>
+                <input type="number" id="calculator-input" class="modern-input" placeholder="Valor (ex: 5000)">
+            </div>
+            <div class="card-actions">
+                <button id="calculator-confirm" class="button primary"><i class="fas fa-calculator"></i> Calcular</button>
+                <button data-close-button class="button secondary"><i class="fas fa-ban"></i> Cancelar</button>
+            </div>
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
